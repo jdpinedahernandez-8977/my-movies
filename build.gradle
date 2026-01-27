@@ -1,0 +1,111 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        compose_version = '1.5.4'
+    }
+    ext.kotlin_version = '1.9.20'
+    ext.appcompat_version = '1.3.1'
+    ext.recyclerview_version = '1.1.0'
+    ext.constraintlayout_version = '2.0.4'
+    ext.androidxCore_version = '1.3.2'
+    ext.lifecycleViewModel_version = '2.3.0'
+    ext.playServicesLocation_version = '17.1.0'
+    ext.material_version = '1.3.0'
+    ext.room_version = '2.6.1'
+    ext.glide_version = '4.16.0'
+    ext.dexter_version = '6.2.2'
+    ext.coroutines_version = '1.4.2'
+    ext.okhttpLoginInterceptor_version = '4.9.0'
+    ext.retrofit_version = '2.9.0'
+    ext.koin_version = '3.0.1'
+    ext.junit_version = '4.13.1'
+    ext.mockitoKotlin_version = '2.2.0'
+    ext.mockitoInline_version = '2.28.2'
+    ext.koinTest_version = '3.0.1'
+    ext.archCoreTesting_version = '2.1.0'
+    ext.testRunner_version = '1.3.0'
+    ext.espresso_version = '3.3.0'
+    ext.rules_version = '1.3.0'
+    ext.extJunit_version = '1.1.2'
+    ext.mockWebServer_version = '4.9.0'
+    ext.okhttpIdling_version = '1.0.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    ext {
+
+        androidLibs = [
+                appcompat           : "androidx.appcompat:appcompat:$appcompat_version",
+                recyclerview        : "androidx.recyclerview:recyclerview:$recyclerview_version",
+                constraintlayout    : "androidx.constraintlayout:constraintlayout:$constraintlayout_version",
+                androidxCore        : "androidx.core:core-ktx:$androidxCore_version",
+                lifecycleViewModel  : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleViewModel_version",
+                playServicesLocation: "com.google.android.gms:play-services-location:$playServicesLocation_version",
+                material            : "com.google.android.material:material:$material_version",
+                roomRuntime         : "androidx.room:room-runtime:$room_version",
+                roomKtx             : "androidx.room:room-ktx:$room_version",
+                glide               : "com.github.bumptech.glide:glide:$glide_version",
+                dexter              : "com.karumi:dexter:$dexter_version"
+        ]
+
+        androidKaptLibs = [
+                roomCompiler : "androidx.room:room-compiler:$room_version",
+                glideCompiler: "com.github.bumptech.glide:compiler:$glide_version"
+        ]
+
+        kotlinLibs = [
+                stdlib    : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+        ]
+
+        libs = [
+                okhttpLoginInterceptor   : "com.squareup.okhttp3:logging-interceptor:$okhttpLoginInterceptor_version",
+                retrofit                 : "com.squareup.retrofit2:retrofit:$retrofit_version",
+                retrofitGsonConverter    : "com.squareup.retrofit2:converter-gson:$retrofit_version",
+                koin                     : "io.insert-koin:koin-android:$koin_version"
+        ]
+
+        testLibs = [
+                junit        : "junit:junit:$junit_version",
+                mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlin_version",
+                mockitoInline: "org.mockito:mockito-inline:$mockitoInline_version",
+                koinTest     : "io.insert-koin:koin-test:$koinTest_version",
+                testShared   : project(':testShared')
+        ]
+
+        androidxTestLibs = [
+                archCoreTesting: "androidx.arch.core:core-testing:$archCoreTesting_version"
+        ]
+
+        androidTestLibs = [
+                testRunner   : "androidx.test:runner:$testRunner_version",
+                espresso     : "androidx.test.espresso:espresso-contrib:$espresso_version",
+                rules        : "androidx.test:rules:$rules_version",
+                extJunit     : "androidx.test.ext:junit-ktx:$extJunit_version",
+                koinTest     : "org.koin:koin-test:$koinTest_version",
+                mockWebServer: "com.squareup.okhttp3:mockwebserver:$mockWebServer_version",
+                okhttpIdling : "com.jakewharton.espresso:okhttp3-idling-resource:$okhttpIdling_version"
+        ]
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
