@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.juanpineda.mymovies.databinding.ActivityMainBinding
 import com.juanpineda.mymovies.ui.common.PermissionRequester
 import com.juanpineda.mymovies.ui.common.startActivity
+import com.juanpineda.mymovies.ui.chat.ChatActivity
 import com.juanpineda.mymovies.ui.detail.DetailActivity
 import com.juanpineda.mymovies.ui.main.MainViewModel.UiModel
 import org.koin.androidx.scope.ScopeActivity
@@ -32,6 +33,10 @@ class MainActivity : ScopeActivity() {
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         binding.recycler.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))
+
+        binding.fabChat.setOnClickListener {
+            startActivity<ChatActivity>()
+        }
     }
 
     private fun updateUi(model: UiModel) {

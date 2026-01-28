@@ -1,0 +1,16 @@
+Políticas de Privacidad 2024 (extracto)
+
+1. Alcance
+Esta política describe cómo tratamos los datos personales dentro de la aplicación MyMovies.
+
+2. Política de tratamiento de datos
+MyMovies recopila únicamente los datos necesarios para proveer la funcionalidad principal.
+El tratamiento de datos se realiza conforme a las leyes aplicables y con medidas de seguridad razonables.
+No vendemos datos personales a terceros.
+
+3. Conservación
+Conservamos la información el tiempo estrictamente necesario para cumplir el propósito declarado.
+
+4. Derechos del usuario
+El usuario puede solicitar acceso, rectificación o eliminación de sus datos, según corresponda.
+
