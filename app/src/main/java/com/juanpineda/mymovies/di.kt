@@ -14,6 +14,10 @@ import com.juanpineda.mymovies.data.database.RoomDataSource
 import com.juanpineda.mymovies.data.server.BASE_URL
 import com.juanpineda.mymovies.data.server.TheMovieDb
 import com.juanpineda.mymovies.data.server.TheMovieDbDataSource
+import com.juanpineda.mymovies.ui.chat.ChatActivity
+import com.juanpineda.mymovies.ui.chat.ChatViewModel
+import com.juanpineda.mymovies.ui.chat.KnowledgeAnswerer
+import com.juanpineda.mymovies.ui.chat.LocalAssetKnowledgeAnswerer
 import com.juanpineda.mymovies.ui.detail.DetailActivity
 import com.juanpineda.mymovies.ui.detail.DetailViewModel
 import com.juanpineda.mymovies.ui.main.MainActivity
@@ -63,6 +67,11 @@ private val scopesModule = module {
     scope(named<MainActivity>()) {
         viewModel { MainViewModel(get(), get()) }
         scoped { GetPopularMovies(get()) }
+    }
+
+    scope(named<ChatActivity>()) {
+        scoped<KnowledgeAnswerer> { LocalAssetKnowledgeAnswerer(get()) }
+        viewModel { ChatViewModel(get(), get()) }
     }
 
     scope(named<DetailActivity>()) {

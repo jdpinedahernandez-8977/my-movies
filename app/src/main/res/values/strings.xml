@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">My Movies</string>
     <string name="api_key">8585ed85b09caf3e49c1a26d52195bd1</string>
+    <string name="open_chat">Open chat</string>
+    <string name="chat_title">Expert chat</string>
+    <string name="chat_hint">Ask about the privacy policy…</string>
+    <string name="chat_send">Send</string>
     <string name="detail_movie_add_to_favorite">Added to your favorites</string>
     <string name="dialog_detail_movie_vote_title">Rate this movie</string>
     <string name="dialog_detail_movie_vote_subtitle">Remember that you can vote once for each film</string>
