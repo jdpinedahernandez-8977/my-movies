@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.0.21'
 }
 
 android {
@@ -42,7 +44,6 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
     }
     packagingOptions {
         resources {
@@ -69,7 +70,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     kapt androidKaptLibs.values()
-
+    implementation platform('com.google.firebase:firebase-bom:34.8.0')
+    implementation 'com.google.firebase:firebase-ai'
+    implementation 'com.google.firebase:firebase-analytics'
     testImplementation testLibs.values()
     testImplementation androidxTestLibs.values()
     androidTestImplementation androidTestLibs.values()
