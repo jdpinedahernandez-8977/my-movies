@@ -1,6 +1,7 @@
 package com.juanpineda.mymovies.ui.main
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -8,6 +9,7 @@ import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.juanpineda.mymovies.databinding.ActivityMainBinding
+import com.juanpineda.mymovies.ui.chat.ChatActivity
 import com.juanpineda.mymovies.ui.common.PermissionRequester
 import com.juanpineda.mymovies.ui.common.startActivity
 import com.juanpineda.mymovies.ui.detail.DetailActivity
@@ -32,6 +34,10 @@ class MainActivity : ScopeActivity() {
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         binding.recycler.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))
+        
+        binding.fabChat.setOnClickListener {
+            startActivity(Intent(this, ChatActivity::class.java))
+        }
     }
 
     private fun updateUi(model: UiModel) {
