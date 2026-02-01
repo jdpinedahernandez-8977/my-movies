@@ -31,4 +31,16 @@ class TheMovieDbDataSource(private val theMovieDb: TheMovieDb) : RemoteDataSourc
                 .map { it.toDomainMovie() }
         }
     }
+
+    override suspend fun searchMovies(
+        apiKey: String,
+        query: String
+    ) = withContext(Dispatchers.IO) {
+        resultHandlerOf {
+            theMovieDb.service
+                .searchMoviesAsync(apiKey, query)
+                .results
+                .map { it.toDomainMovie() }
+        }
+    }
 }

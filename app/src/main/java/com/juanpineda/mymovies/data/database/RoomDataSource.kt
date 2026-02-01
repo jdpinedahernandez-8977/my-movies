@@ -25,7 +25,27 @@ class RoomDataSource(db: MovieDatabase) : LocalDataSource {
     }
 
     override suspend fun findById(id: Int): Movie = withContext(Dispatchers.IO) {
-        movieDao.findById(id).toDomainMovie()
+        val roomMovie = movieDao.findById(id)
+        if (roomMovie != null) {
+            roomMovie.toDomainMovie()
+        } else {
+            // If movie not in database, create a placeholder that will trigger loading from API
+            Movie(
+                id = id,
+                title = "",
+                overview = "",
+                releaseDate = "",
+                posterPath = "",
+                backdropPath = "",
+                originalLanguage = "",
+                originalTitle = "",
+                popularity = 0.0,
+                voteAverage = 0.0,
+                favorite = false,
+                adult = false,
+                myVote = 0f
+            )
+        }
     }
 
     override suspend fun update(movie: Movie) {

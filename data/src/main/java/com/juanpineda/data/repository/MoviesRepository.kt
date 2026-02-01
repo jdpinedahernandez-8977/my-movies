@@ -43,4 +43,16 @@ class MoviesRepository(
         }
 
     suspend fun getMovieImages(id: Int) = remoteDataSource.getMovieImages(apiKey, id)
+
+    suspend fun searchMovies(query: String): List<Movie> {
+        val result = remoteDataSource.searchMovies(apiKey, query)
+        return when (result) {
+            is SuccessResponse -> result.data
+            else -> emptyList()
+        }
+    }
+
+    suspend fun saveMovie(movie: Movie) {
+        localDataSource.saveMovies(listOf(movie))
+    }
 }

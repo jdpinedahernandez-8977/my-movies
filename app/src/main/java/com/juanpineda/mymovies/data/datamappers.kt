@@ -2,7 +2,7 @@ package com.juanpineda.mymovies.data
 
 import com.juanpineda.domain.Movie
 import com.juanpineda.mymovies.data.database.Movie as DomainMovie
-import com.juanpineda.mymovies.data.server.Movie as ServerMovie
+import com.juanpineda.mymovies.data.server.TheMovieDbMovie as ServerMovie
 import com.juanpineda.domain.MovieImage
 import com.juanpineda.mymovies.data.server.TheMoveDbImage
 
@@ -45,8 +45,8 @@ fun ServerMovie.toDomainMovie(): Movie =
         title,
         overview,
         releaseDate,
-        posterPath,
-        backdropPath ?: posterPath,
+        posterPath ?: "",
+        backdropPath ?: posterPath ?: "",
         originalLanguage,
         originalTitle,
         popularity,

@@ -16,4 +16,18 @@ interface TheMovieDbService {
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
     ): TheMovieDbImagesResult
+
+    @GET("search/movie")
+    suspend fun searchMoviesAsync(
+        @Query("api_key") apiKey: String,
+        @Query("query") query: String,
+        @Query("language") language: String = "es"
+    ): MovieDbResult
+
+    @GET("movie/{movieId}")
+    suspend fun getMovieDetailsAsync(
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "es"
+    ): TheMovieDbMovie
 }
