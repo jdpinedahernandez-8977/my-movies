@@ -73,9 +73,13 @@ class ChatViewModel(
             _isLoading.value = true
 
             try {
-                // Search for movies in TMDb first
-                val movies = searchMovies(text)
-                android.util.Log.d("ChatViewModel", "Search query: $text")
+                // Extract movie name from user message using AI
+                val movieName = extractMovieName(text)
+                android.util.Log.d("ChatViewModel", "Extracted movie name: $movieName")
+                
+                // Search for movies in TMDb with extracted name
+                val movies = if (movieName.isNotEmpty()) searchMovies(movieName) else emptyList()
+                android.util.Log.d("ChatViewModel", "Search query: $movieName")
                 android.util.Log.d("ChatViewModel", "Movies found: ${movies.size}")
                 movies.forEach { movie ->
                     android.util.Log.d("ChatViewModel", "Movie: ${movie.title} (ID: ${movie.id})")
@@ -106,6 +110,20 @@ class ChatViewModel(
             } finally {
                 _isLoading.value = false
             }
+        }
+    }
+
+    private suspend fun extractMovieName(text: String): String {
+        return try {
+            val extractionModel = FirebaseAI.instance.generativeModel(modelName = "gemini-2.5-flash-lite")
+            val prompt = """Extrae SOLO el nombre de la película del siguiente texto. Si no hay ninguna película mencionada, responde con una palabra clave de búsqueda relevante o vacío.
+Texto: "$text"
+Respuesta (solo el nombre de la película, sin explicaciones):"""
+            val response = extractionModel.generateContent(prompt)
+            response.text?.trim() ?: ""
+        } catch (e: Exception) {
+            android.util.Log.e("ChatViewModel", "Error extracting movie name: ${e.message}")
+            text
         }
     }
 
