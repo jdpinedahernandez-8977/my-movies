@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.juanpineda.domain.Movie
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,7 +51,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Chat de Películas - TMDb") },
+                title = { Text("Asistente Itaú Uruguay") },
                 backgroundColor = MaterialTheme.colors.primary
             )
         }
@@ -71,12 +70,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(messages) { message ->
-                    MessageBubble(
-                        message = message,
-                        onMovieClick = { movie ->
-                            viewModel.navigateToMovieDetail(context, movie)
-                        }
-                    )
+                    MessageBubble(message = message)
                 }
                 if (isLoading) {
                     item {
@@ -97,7 +91,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
                     value = inputText,
                     onValueChange = { inputText = it },
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Pregunta sobre películas...") },
+                    placeholder = { Text("¿En qué puedo ayudarte?") },
                     enabled = !isLoading
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -120,10 +114,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
 }
 
 @Composable
-fun MessageBubble(
-    message: ChatMessage,
-    onMovieClick: (Movie) -> Unit
-) {
+fun MessageBubble(message: ChatMessage) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = if (message.isUser) Arrangement.End else Arrangement.Start
@@ -131,42 +122,13 @@ fun MessageBubble(
         Surface(
             shape = RoundedCornerShape(12.dp),
             color = if (message.isUser) MaterialTheme.colors.primary else Color.LightGray,
-            modifier = Modifier
-                .widthIn(max = 280.dp)
-                .then(
-                    if (message.movie != null) {
-                        Modifier.clickable { onMovieClick(message.movie) }
-                    } else Modifier
-                )
+            modifier = Modifier.widthIn(max = 280.dp)
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                Text(
-                    text = message.text,
-                    color = if (message.isUser) Color.White else Color.Black
-                )
-                if (message.movie != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Divider(
-                        color = if (message.isUser) Color.White.copy(alpha = 0.3f) 
-                               else MaterialTheme.colors.primary.copy(alpha = 0.3f),
-                        thickness = 1.dp
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "🎬 Toca para ver detalles de la película",
-                            color = if (message.isUser) Color.White else MaterialTheme.colors.primary,
-                            style = MaterialTheme.typography.caption.copy(
-                                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
-                            )
-                        )
-                    }
-                }
-            }
+            Text(
+                text = message.text,
+                color = if (message.isUser) Color.White else Color.Black,
+                modifier = Modifier.padding(12.dp)
+            )
         }
     }
 }

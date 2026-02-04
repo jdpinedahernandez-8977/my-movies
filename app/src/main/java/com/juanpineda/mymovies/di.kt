@@ -76,6 +76,5 @@ private val scopesModule = module {
         scoped { GetMovieImages(get()) }
     }
 
-    viewModel { ChatViewModel(get(), get()) }
-    factory { SearchMovies(get()) }
+    viewModel { ChatViewModel(get()) }
 }
