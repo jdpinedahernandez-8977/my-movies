@@ -100,7 +100,7 @@ class ChatViewModel(
                 android.util.Log.d("ChatViewModel", "Extracted movie: ${movie?.title} (ID: ${movie?.id})")
                 
                 _messages.value = _messages.value + ChatMessage(
-                    aiResponse.replace(Regex("\\[VER_DETALLES:.*?\\]"), "").trim(),
+                    aiResponse.replace(Regex("\\[VER_DETALLES:.*?\\]"), "").stripMarkdown().trim(),
                     false,
                     movie
                 )
@@ -156,6 +156,14 @@ Respuesta:"""
         android.util.Log.d("ChatViewModel", "No movie reference found")
         return null
     }
+
+    private fun String.stripMarkdown() = this
+        .replace(Regex("#{1,6}\\s"), "")
+        .replace(Regex("\\*{1,3}(.*?)\\*{1,3}"), "$1")
+        .replace(Regex("_{1,3}(.*?)_{1,3}"), "$1")
+        .replace(Regex("^[\\-*+]\\s", RegexOption.MULTILINE), "• ")
+        .replace(Regex("`{1,3}(.*?)`{1,3}"), "$1")
+        .replace(Regex("\\[(.+?)\\]\\(.+?\\)"), "$1")
 
     fun navigateToMovieDetail(context: Context, movie: Movie) {
         viewModelScope.launch {
