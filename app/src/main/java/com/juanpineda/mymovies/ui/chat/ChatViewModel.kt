@@ -116,14 +116,17 @@ class ChatViewModel(
     private suspend fun extractMovieName(text: String): String {
         return try {
             val extractionModel = FirebaseAI.instance.generativeModel(modelName = "gemini-2.5-flash-lite")
-            val prompt = """Extrae SOLO el nombre de la película del siguiente texto. Si no hay ninguna película mencionada, responde con una palabra clave de búsqueda relevante o vacío.
+            val prompt = """Analiza si el siguiente texto contiene una intención de buscar o preguntar sobre una película específica (por ejemplo: "busca esta película", "qué sabes de...", "recomiéndame...", mencionar un título concreto, etc.).
+Si SÍ hay intención de buscar una película, responde ÚNICAMENTE con el nombre de la película.
+Si NO hay intención de buscar una película (saludos, preguntas generales, conversación casual, etc.), responde ÚNICAMENTE con la palabra: NINGUNA
 Texto: "$text"
-Respuesta (solo el nombre de la película, sin explicaciones):"""
+Respuesta:"""
             val response = extractionModel.generateContent(prompt)
-            response.text?.trim() ?: ""
+            val result = response.text?.trim() ?: "NINGUNA"
+            if (result.equals("NINGUNA", ignoreCase = true)) "" else result
         } catch (e: Exception) {
             android.util.Log.e("ChatViewModel", "Error extracting movie name: ${e.message}")
-            text
+            ""
         }
     }
 
